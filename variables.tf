@@ -67,25 +67,25 @@ variable "vpc_cidr" {
 }
 
 variable "pub_sub1_cidr" {
-  default = "172.21.1.0/16"
+  default = "172.21.1.0/24"
 }
 
 variable "pub_sub2_cidr" {
-  default = "172.21.2.0/16"
+  default = "172.21.2.0/24"
 }
 
 variable "pub_sub3_cidr" {
-  default = "172.21.3.0/16"
+  default = "172.21.3.0/24"
 }
 
 variable "priv_sub1_cidr" {
-  default = "172.21.4.0/16"
+  default = "172.21.4.0/24"
 }
 
 variable "priv_sub2_cidr" {
-  default = "172.21.5.0/16"
+  default = "172.21.5.0/24"
 }
 
 variable "priv_sub3_cidr" {
-  default = "172.21.6.0/16"
+  default = "172.21.6.0/24"
 }
