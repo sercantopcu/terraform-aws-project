@@ -1,16 +1,16 @@
 resource "aws_elastic_beanstalk_environment" "bean-prod" {
   name                = "bean-prod"
   application         = aws_elastic_beanstalk_application.prod.name
-  solution_stack_name = "64bit Amazon Linux 2 v4.5.2 running Tomcat 8.5 Corretto 11 "
-  cname_prefix = "bean-prod-domain"
+  solution_stack_name = "64bit Amazon Linux 2 v4.5.2 running Tomcat 8.5 Corretto 11"
+  cname_prefix        = "bean-prod-domain"
 
-    setting {
+  setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
     value     = module.vpc.vpc_id
   }
 
- setting {
+  setting {
     namespace = "aws:ec2:vpc"
     name      = "AssociatePublicAddress"
     value     = "false"
@@ -19,12 +19,12 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = join(", ",[module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]])
+    value     = join(", ", [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]])
   }
-    setting {
+  setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = join(", ",[module.vpc.public_subnets[0], module.vpc.public_subnets[1], module.vpc.public_subnets[2]])
+    value     = join(", ", [module.vpc.public_subnets[0], module.vpc.public_subnets[1], module.vpc.public_subnets[2]])
   }
 
   setting {
@@ -33,7 +33,7 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
     value     = "t2.micro"
   }
 
-   setting {
+  setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "EC2KeyName"
     value     = "aws_key_pair.aws_terraform_key.key_name"
@@ -63,36 +63,36 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
     value     = "prod"
   }
 
-    setting {
+  setting {
     namespace = "aws:elasticbeanstalk:application"
     name      = "LOGGING_APPENDER"
     value     = "GRAYLOG"
   }
 
-   setting {
+  setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name      = "systemType"
     value     = "enhanced"
   }
 
-     setting {
+  setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "RollingUpdateEnabled"
     value     = "true"
   }
 
-     setting {
+  setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "RollingUpdateType"
     value     = "Health"
   }
 
-       setting {
+  setting {
     namespace = "aws:autoscaling:updatepolicy:rollingupdate"
     name      = "MaxBatchSize"
     value     = "1"
   }
-setting {
+  setting {
     namespace = "aws:elb:loadbalancer"
     name      = "CrossZone"
     value     = "true"
@@ -133,7 +133,7 @@ setting {
     value     = aws_security_group.bean-elb-sg.id
   }
 
-    depends_on = [aws_security_group.bean-elb-sg, aws_security_group.prod-sg]
+  depends_on = [aws_security_group.bean-elb-sg, aws_security_group.prod-sg]
 
 }
 
