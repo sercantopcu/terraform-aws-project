@@ -1,22 +1,22 @@
 resource "aws_db_subnet_group" "rds-subnet-group" {
-    name "main"
+    name = "main"
     subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
 
     tags = {
-        Name "Subnet group for RDS"
+        Name = "Subnet group for RDS"
     }
 }
 
 resource "aws_elasticache_subnet_group" "elasticache-subnet-group" {
-    name "elasticache-subnet-group"
+    name = "elasticache-subnet-group"
     subnet_ids = [module.vpc.private_subnets[0], module.vpc.private_subnets[1], module.vpc.private_subnets[2]]
 
     tags = {
-        Name "Subnet group for ElastiCache"
+        Name = "Subnet group for ElastiCache"
     }
 }
 
-resource "aws_db_intance" "rds-subnet-group" {
+resource "aws_db_instance" "rds-subnet-group" {
     allocated_storage    = 20
     storage_type         = "gp2"
     db_name              = var.db_name
@@ -41,7 +41,7 @@ resource "aws_elasticache_cluster" "cache" {
     parameter_group_name = "default.memcached1.4"
     port                 = 11211
     subnet_group_name = aws_elasticache_subnet_group.elasticache-subnet-group.name
-    vpc_security_group_ids        = [aws_security_group.backend-sg.id]
+    security_group_ids   = [aws_security_group.backend-sg.id]
 }
 
 resource "aws_mq_broker" "rmq" {
