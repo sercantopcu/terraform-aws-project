@@ -5,6 +5,12 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   cname_prefix        = "bean-prod-domain"
 
   setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.beanstalk_profile.name  # Reference your instance profile
+  }
+
+  setting {
     namespace = "aws:ec2:vpc"
     name      = "VPCId"
     value     = module.vpc.vpc_id
@@ -12,7 +18,7 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
 
   setting {
     namespace = "aws:ec2:vpc"
-    name      = "AssociatePublicAddress"
+    name      = "AssociatePublicIpAddress"
     value     = "false"
   }
 
@@ -36,7 +42,7 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "EC2KeyName"
-    value     = "aws_key_pair.aws_terraform_key.key_name"
+    value     = aws_key_pair.aws_terraform_key.key_name
   }
 
   setting {
@@ -58,21 +64,27 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   }
 
   setting {
-    namespace = "aws:elasticbeanstalk:application"
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "environment"
     value     = "prod"
   }
 
   setting {
-    namespace = "aws:elasticbeanstalk:application"
-    name      = "LOGGING_APPENDER"
-    value     = "GRAYLOG"
+    namespace = "aws:elasticbeanstalk:environment"
+    name      = "EnvironmentType"
+    value     = "LoadBalanced"
   }
 
   setting {
     namespace = "aws:elasticbeanstalk:healthreporting:system"
     name      = "systemType"
     value     = "enhanced"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "MY_ENV_VAR"
+    value     = "SomeValue"
   }
 
   setting {
