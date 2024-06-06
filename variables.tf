@@ -34,6 +34,10 @@ variable "rmq_pass" {
   default = "FrL@raCriB7eYi+tuprL"
 }
 
+variable "db_user" {
+  default = "admin"
+}
+
 variable "db_pass" {
   default = "admin123"
 }
