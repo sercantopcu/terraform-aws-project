@@ -5,6 +5,12 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   cname_prefix        = "bean-prod-domain"
 
   setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "IamInstanceProfile"
+    value     = aws_iam_instance_profile.eb_instance_profile.name
+  }
+
+  setting {
     namespace = "aws:elb:healthcheck"
     name      = "HealthyThreshold"
     value     = "3"
@@ -13,7 +19,7 @@ resource "aws_elastic_beanstalk_environment" "bean-prod" {
   setting {
     namespace = "aws:elb:healthcheck"
     name      = "Interval"
-    value     = "30"
+    value     = "40"
   }
 
   setting {
