@@ -82,6 +82,13 @@ resource "aws_security_group" "backend-sg" {
     security_groups = [aws_security_group.prod-sg.id]
   }
 
+  ingress {
+    from_port       = 3306
+    protocol        = "tcp"
+    to_port         = 3306
+    security_groups = [aws_security_group.bastion-sg.id]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

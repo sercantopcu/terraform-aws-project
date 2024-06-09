@@ -23,7 +23,7 @@ variable "user" {
 }
 
 variable "myip" {
-  default = "183.83.39.124/32"
+  default = "54.161.82.99/32"
 }
 
 variable "rmq_user" {
@@ -46,7 +46,7 @@ variable "db_name" {
   default = "accounts"
 }
 
-variable "intance_count" {
+variable "instance_count" {
   default = "1"
 }
 
